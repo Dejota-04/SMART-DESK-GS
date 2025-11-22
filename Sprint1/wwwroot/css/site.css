@@ -1,0 +1,38 @@
+html {
+    font-size: 14px;
+    /* 1. HTML precisa ter 100% de altura */
+    height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* 2. Body vira o container flex principal */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 3. O 'div.container' (que segura o @RenderBody) 
+    é quem vai crescer para ocupar o espaço.
+*/
+div.container {
+    flex-grow: 1;
+}
+
+/* 4. A MÁGICA DO CONSERTO:
+    Forçamos o footer a obedecer o layout flex e 
+    cancelamos o 'position: absolute' do Bootswatch.
+*/
+.footer {
+    position: static !important; /* Remove o 'position: absolute' */
+    flex-shrink: 0; /* Impede o footer de encolher */
+}

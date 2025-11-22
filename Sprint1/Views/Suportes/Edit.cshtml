@@ -1,0 +1,81 @@
+﻿@model Sprint1.Models.Suporte
+
+@{
+    ViewData["Title"] = "Tratar Chamado";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-warning text-dark">
+            <h4 class="mb-0">🛠️ Tratar Chamado #@Model.Id</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="DataReclamacao" />
+
+                <div class="row">
+                    <div class="col-md-6 border-end">
+                        <h5 class="text-muted">Dados da Solicitação</h5>
+
+                        <div class="mb-3">
+                            <label asp-for="UsuarioId" class="form-label fw-bold">Solicitante</label>
+                            <select asp-for="UsuarioId" class="form-select bg-light" asp-items="ViewBag.UsuarioId" style="pointer-events: none;"></select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Titulo" class="form-label fw-bold"></label>
+                            <input asp-for="Titulo" class="form-control" />
+                            <span asp-validation-for="Titulo" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Descricao" class="form-label fw-bold"></label>
+                            <textarea asp-for="Descricao" class="form-control" rows="5"></textarea>
+                            <span asp-validation-for="Descricao" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h5 class="text-success">Área de Resolução</h5>
+
+                        <div class="mb-3">
+                            <label asp-for="Status" class="form-label fw-bold">Status Atual</label>
+                            <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<Sprint1.Models.StatusSuporte>()"></select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="AdminId" class="form-label fw-bold">Atribuído para (Admin)</label>
+                            <select asp-for="AdminId" class="form-select" asp-items="ViewBag.AdminId">
+                                <option value="">-- Selecione um Admin --</option>
+                            </select>
+                            <span asp-validation-for="AdminId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="DataResolucao" class="form-label fw-bold">Data de Resolução</label>
+                            <input asp-for="DataResolucao" class="form-control" />
+                            <small class="text-muted">Deixe em branco para preencher automaticamente ao concluir.</small>
+                            <span asp-validation-for="DataResolucao" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="d-flex justify-content-end">
+                    <a asp-action="Index" class="btn btn-outline-secondary me-2">Voltar</a>
+                    <input type="submit" value="Salvar Alterações" class="btn btn-success px-4" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

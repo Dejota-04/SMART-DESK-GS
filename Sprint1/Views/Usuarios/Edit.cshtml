@@ -1,0 +1,92 @@
+﻿@model Sprint1.Models.Usuario
+
+@{
+    ViewData["Title"] = "Editar Usuário";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">✏️ Editar Usuário: @Model.Nome</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+
+                <input type="hidden" asp-for="SenhaHash" />
+
+                <h5 class="text-muted mb-3">Dados Pessoais</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Nome" class="form-label fw-bold"></label>
+                        <input asp-for="Nome" class="form-control" placeholder="Nome completo" />
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Email" class="form-label fw-bold"></label>
+                        <input asp-for="Email" class="form-control" placeholder="email@empresa.com" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="Altura" class="form-label fw-bold">Altura (m)</label>
+                        <input asp-for="Altura" class="form-control" placeholder="Ex: 1,75" />
+                        <span asp-validation-for="Altura" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="Peso" class="form-label fw-bold">Peso (kg)</label>
+                        <input asp-for="Peso" class="form-control" placeholder="Ex: 70,5" />
+                        <span asp-validation-for="Peso" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="Sexo" class="form-label fw-bold"></label>
+                        <select asp-for="Sexo" class="form-select" asp-items="Html.GetEnumSelectList<Sprint1.Models.SexoEnum>()"></select>
+                        <span asp-validation-for="Sexo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <hr />
+
+                <h5 class="text-muted mb-3">Dados Corporativos</h5>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="Role" class="form-label fw-bold">Permissão (Role)</label>
+                        <select asp-for="Role" class="form-select" asp-items="Html.GetEnumSelectList<Sprint1.Models.RoleEnum>()"></select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="ModeloTrabalho" class="form-label fw-bold">Modelo de Trabalho</label>
+                        <select asp-for="ModeloTrabalho" class="form-select" asp-items="Html.GetEnumSelectList<Sprint1.Models.ModeloTrabalhoEnum>()"></select>
+                        <span asp-validation-for="ModeloTrabalho" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="DispositivoId" class="form-label fw-bold">Dispositivo Vinculado</label>
+                        <select asp-for="DispositivoId" class="form-select" asp-items="ViewBag.DispositivoId"></select>
+                        <span asp-validation-for="DispositivoId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="DataCadastro" class="form-label fw-bold">Data de Cadastro</label>
+                        <input asp-for="DataCadastro" class="form-control bg-light" readonly />
+                    </div>
+                </div>
+
+                <div class="mt-3 d-flex justify-content-end">
+                    <a asp-action="Index" class="btn btn-outline-secondary me-2">Cancelar</a>
+                    <input type="submit" value="Salvar Alterações" class="btn btn-success px-4" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

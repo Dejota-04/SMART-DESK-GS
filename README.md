@@ -1,137 +1,93 @@
 
-# 🏴‍☠️ Rei dos Piratas - Painel Administrativo (MVP Sprint)
 
-## Sobre esta Aplicação
+# 🏢 Smart Desk - Sistema de Gestão Corporativa (.NET 8)
 
-Este repositório contém o **MVP (Produto Mínimo Viável)** de um painel administrativo para o e-commerce de mangás "Rei dos Piratas". A aplicação foi desenvolvida em **ASP.NET Core MVC** como parte da "Challenge Sprint" da faculdade pelo grupo CATECH.
+## 📋 Visão Geral Técnica
+Este projeto consiste em uma aplicação web desenvolvida em **ASP.NET Core MVC (.NET 8)** para o gerenciamento de colaboradores e chamados de suporte em um ambiente corporativo.
 
-O foco desta aplicação é fornecer uma interface web completa para o **Gerenciamento de Produtos (CRUD)**, permitindo que um administrador controle o catálogo da loja. Diferente de um protótipo simples, esta aplicação utiliza uma arquitetura robusta com persistência de dados real, conectando-se a um banco de dados **Oracle** através do **Entity Framework Core (EF Core)**.
+O foco principal desta entrega é a estruturação da arquitetura MVC, implementação do **Entity Framework Core** com banco de dados **Oracle**, criação de rotas personalizadas e validação de dados (Server-side e Client-side).
 
-## ✨ Funcionalidades Implementadas
+---
 
-### Gerenciamento Completo de Produtos (CRUD):
+## 👨‍💻 Equipe (Grupo CATECH)
+* **Daniel Santana Corrêa Batista** – RM559622
+* **Jonas de Jesus Campos de Oliveira** – RM561144
+* **Wendell Nascimento Dourado** – RM559336
 
--   **Create:** Formulário otimizado para cadastrar novos mangás.
-    
--   **Read:**
-    
-    -   **Página de Gerenciamento (`/mangas`):** Tabela de produtos com paginação, busca por termo e ordenação por colunas (Nome, Preço, Estoque).
-        
-    -   **Página de Detalhes:** Visualização completa e estilizada de um único produto.
-        
--   **Update:** Formulário de edição que carrega os dados existentes do banco.
-    
--   **Delete:** Função de exclusão segura com confirmação em JavaScript (`confirm`).
-    
+---
 
-### Persistência de Dados com Banco Real (Oracle):
+## 🛠️ Stack Tecnológica & Decisões Arquiteturais
 
--   **Conexão Real:** A aplicação se conecta a um banco de dados Oracle, gerenciado pelo Entity Framework Core.
-    
--   **Mapeamento (ORM):** Uso do `ApplicationDbContext` e classes de `Model` (`Produto.cs`) com Data Annotations (`[Table]`, `[Column]`) para mapear as tabelas do Oracle.
-    
--   **Tratamento de Erros de Banco:** O código inclui lógica `try-catch` para exceções específicas do banco (ex: `OracleException`, `DbUpdateException`), impedindo a aplicação de quebrar e informando o usuário (via `TempData`) sobre erros de integridade (ex: tentar excluir um produto que já está em um pedido).
-    
+### 1. Camada de Apresentação (Web Layer)
+* **ASP.NET Core MVC:** Utilizado para separação clara de responsabilidades.
+* **Razor Views:** Interface do usuário com **Bootstrap 5** para layout responsivo.
+* **Tag Helpers:** Utilizados extensivamente para formulários e links (`asp-controller`, `asp-for`).
+* **ViewData & TempData:** Implementados para transporte de dados temporários (mensagens de feedback "Toast") e preenchimento de Dropdowns (`SelectList`).
 
-### Validação de Formulários (pt-BR):
+### 2. Camada de Dados (Infra & Data)
+* **Entity Framework Core:** ORM utilizado para abstração do acesso a dados.
+* **Mapeamento Objeto-Relacional:** Configurado explicitamente no `DbContext` para garantir compatibilidade com o Oracle Database, resolvendo conflitos de *Case Sensitivity* (nomes de tabelas e colunas em maiúsculo).
+* **Enum Conversion:** Configuração do EF Core para converter `Enums` (Status, Role) para `Strings` no banco de dados, aumentando a legibilidade dos dados.
 
--   Mensagens de erro de validação customizadas e traduzidas para o português (`[Required]`, `[StringLength]`).
-    
--   Configuração de **Globalização (pt-BR)** no `Program.cs` para que o servidor (`Model Binder`) e o cliente (`jQuery Validate`) aceitem corretamente o formato de números brasileiro (ex: **29,9**).
-    
+### 3. Regras de Negócio & Validações
+* **Data Annotations:** Modelos (`Usuario`, `Suporte`) decorados com atributos como `[Required]`, `[StringLength]` e `[EmailAddress]` para garantir a integridade na entrada.
+* **Soft Deletes (Lógica):** Implementação de restrições de chave estrangeira (`DeleteBehavior.Restrict`) para impedir a exclusão de usuários que possuem histórico de atendimentos.
 
-### Interface Administrativa Responsiva:
+---
 
--   Layout que se adapta a diferentes tamanhos de tela (desktop, tablet, mobile) utilizando Bootstrap 5.
-    
+## 🚀 Como Rodar o Projeto
 
-## 🛠️ Tecnologias Utilizadas
+### Pré-requisitos
+* .NET SDK 8.0
+* Acesso ao Banco de Dados Oracle.
 
--   **Backend:** ASP.NET Core 8 MVC, C# 11
-    
--   **ORM:** Entity Framework Core 8
-    
--   **Banco de Dados:** Oracle Database
-    
--   **Frontend:** HTML5, CSS3, JavaScript
-    
--   **Framework CSS:** Bootstrap 5
-    
--   **Bibliotecas JS:** jQuery & jQuery Validate
-    
--   **Ambiente de Desenvolvimento:** Visual Studio 2022
-    
+### 1. Configuração de Conexão
+Abra o arquivo `appsettings.json` e configure a string de conexão `OracleConnection` com suas credenciais:
 
-## 🚀 Como Executar a Aplicação
+```json
+"ConnectionStrings": {
+  "OracleConnection": "User Id=SEU_USER;Password=SUA_SENHA;Data Source=oracle.fiap.com.br:1521/ORCL"
+}
+```
 
-A aplicação requer uma conexão com um banco de dados Oracle para funcionar.
+### 2. Banco de Dados (Migrations)
 
-1.  **Clone o Repositório:**
-    
-    ```
-    git clone [https://github.com/Dejota-04/Sprint1.git](https://github.com/Dejota-04/Sprint1.git)
-    
-    ```
-    
-2.  **Configure a String de Conexão:**
-    
-    -   Abra o projeto no Visual Studio.
-        
-    -   No arquivo `appsettings.json`, localize a seção `ConnectionStrings`.
-        
-    -   Atualize o valor de `OracleConnection` com os dados de acesso (Data Source, User Id, Password) do seu ambiente Oracle.
-        
-3.  **Rode as Migrations (Se Necessário):**
-    
-    -   Se o seu banco ainda não possui as tabelas, abra o "Console do Gerenciador de Pacotes" (Package Manager Console) no VS.
-        
-    -   Execute o comando: `Update-Database`
-        
-    -   O EF Core criará as tabelas necessárias (como a `PRODUTOS`) no seu banco.
-        
-4.  **Execute o Projeto:**
-    
-    -   Pressione **F5** ou clique no botão ▶️ para iniciar o projeto em modo de depuração.
-        
-    -   A aplicação estará rodando em `localhost`.
-        
+O projeto utiliza EF Core Migrations. Caso precise inicializar o banco:
 
-## 📂 Estrutura do Projeto
+Bash
 
-O código está organizado seguindo a arquitetura padrão **Model-View-Controller (MVC)**:
+```
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
 
--   **/Models:** Contém as classes de entidade (ex: `Produto.cs`).
-    
--   **/ViewModels:** Contém os DTOs para os formulários (ex: `ProdutoCreateViewModel.cs`, `ProdutoEditViewModel.cs`).
-    
--   **/Views:** Contém os arquivos `.cshtml` (HTML) da interface.
-    
--   **/Controllers:** Contém o `ProdutosController.cs` (com toda a lógica CRUD e rotas de atributo) e o `HomeController.cs`.
-    
--   **/Data:** Contém o `ApplicationDbContext.cs`, que define a sessão com o banco de dados.
-    
--   **Program.cs:** Arquivo de inicialização que configura os serviços (injeção de dependência do `DbContext`), o pipeline HTTP e a globalização `pt-BR`.
-    
--   **appsettings.json:** Armazena a string de conexão do banco de dados.
-    
+### 3. Execução
 
-## 💡 Próximos Passos & Evolução
+No terminal, na pasta raiz do projeto:
 
-Este MVP é a fundação do painel. Os próximos passos para evoluir esta aplicação incluem:
+Bash
 
--   **Sistema de Upload de Imagens:** Substituir o campo de URL de imagem por um upload de arquivo real para um serviço de storage (ex: Azure Blob ou S3).
-    
--   **Autenticação e Autorização:** Adicionar uma tela de login (ASP.NET Core Identity) para proteger o painel.
-    
--   **Expandir o Domínio:** Adicionar novas entidades e seus respectivos CRUDs (ex: `Clientes`, `Pedidos`, `Categorias`).
-    
--   **Criar uma API:** Expor os dados dos produtos através de uma API .NET para ser consumida pelo frontend da loja (cliente final).
-    
+```
+dotnet run
+```
 
-## 👨‍💻 Integrantes do Grupo CATECH
+Acesse via navegador em: `https://localhost:7166`
 
--   **Daniel Santana Corrêa Batista** [RM559622]
-    
--   **Wendell Nascimento Dourado** [RA559336]
-    
--   **Jonas de Jesus Campos de Oliveira** [RM561144]
+----------
+
+
+## 🔗 Rotas da Aplicação
+
+A aplicação utiliza o roteamento padrão do MVC (`{controller}/{action}/{id?}`) e inclui **Rotas Personalizadas** conforme requisito da disciplina:
+
+| Funcionalidade | Rota | Tipo | Controller |
+| :--- | :--- | :--- | :--- |
+| **Dashboard** | `/` | Padrão | `HomeController` |
+| **Listar Usuários** | `/Usuarios` | Padrão | `UsuariosController` |
+| **Novo Usuário** | `/Usuarios/Create` | Padrão | `UsuariosController` |
+| **Central de Suporte** | `/Suportes` | Padrão | `SuportesController` |
+| **Novo Chamado** | `/Atendimento/Novo` | **Personalizada** | `SuportesController` |
+
+
+
+_Projeto acadêmico - FIAP 2025._

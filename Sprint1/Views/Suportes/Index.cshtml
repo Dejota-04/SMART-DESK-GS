@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Sprint1.Models.Suporte>
+
+@{
+    ViewData["Title"] = "Central de Atendimento";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>🎧 Central de Atendimento</h1>
+    <a asp-action="Create" class="btn btn-success">
+        + Abrir Chamado
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Data</th>
+                        <th>Solicitante</th>
+                        <th>Título do Problema</th>
+                        <th>Status</th>
+                        <th>Atendente</th>
+                        <th class="text-end">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.DataReclamacao.ToString("dd/MM/yyyy")</td>
+                            <td class="fw-bold">@Html.DisplayFor(modelItem => item.Solicitante.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Titulo)</td>
+                            <td>
+                                @{
+                                    var badgeClass = item.Status.ToString() == "RESOLVIDO" ? "bg-success" :
+                                    item.Status.ToString() == "AGUARDANDO" ? "bg-warning text-dark" :
+                                    item.Status.ToString() == "CANCELADO" ? "bg-secondary" : "bg-info";
+                                }
+                                <span class="badge @badgeClass">@Html.DisplayFor(modelItem => item.Status)</span>
+                            </td>
+                            <td>
+                                @if (item.Atendente != null)
+                                {
+                                    <span>@item.Atendente.Nome</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">-</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning" title="Tratar Chamado">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary" title="Ver Detalhes">Det</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" title="Excluir">X</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

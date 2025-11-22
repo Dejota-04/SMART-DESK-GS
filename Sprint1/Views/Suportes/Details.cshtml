@@ -1,0 +1,77 @@
+﻿@model Sprint1.Models.Suporte
+
+@{
+    ViewData["Title"] = "Detalhes do Chamado";
+}
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">📄 Detalhes do Chamado #@Model.Id</h4>
+            <span class="badge bg-light text-dark">@Model.DataReclamacao.ToString("dd/MM/yyyy")</span>
+        </div>
+        <div class="card-body">
+            
+            <div class="mb-4 text-center">
+                @{
+                    var badgeClass = Model.Status.ToString() == "RESOLVIDO" ? "bg-success" :
+                                     Model.Status.ToString() == "AGUARDANDO" ? "bg-warning text-dark" :
+                                     Model.Status.ToString() == "CANCELADO" ? "bg-secondary" : "bg-primary";
+                }
+                <span class="badge @badgeClass fs-5 px-4 py-2 rounded-pill">@Model.Status</span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 border-end">
+                    <h5 class="text-muted mb-3">Informações da Solicitação</h5>
+                    <dl class="row">
+                        <dt class="col-sm-4">Solicitante:</dt>
+                        <dd class="col-sm-8 fw-bold">@Html.DisplayFor(model => model.Solicitante.Nome)</dd>
+
+                        <dt class="col-sm-4">E-mail:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Solicitante.Email)</dd>
+
+                        <dt class="col-sm-4">Assunto:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Titulo)</dd>
+
+                        <dt class="col-sm-4">Descrição:</dt>
+                        <dd class="col-sm-8 text-break">@Html.DisplayFor(model => model.Descricao)</dd>
+                    </dl>
+                </div>
+
+                <div class="col-md-6">
+                    <h5 class="text-success mb-3">Dados do Atendimento</h5>
+                    <dl class="row">
+                        <dt class="col-sm-4">Atendente:</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.Atendente != null)
+                            {
+                                <span>@Model.Atendente.Nome</span> <span class="badge bg-dark">ADM</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted fst-italic">-- Não atribuído --</span>
+                            }
+                        </dd>
+
+                        <dt class="col-sm-4">Data Resolução:</dt>
+                        <dd class="col-sm-8">
+                            @if (Model.DataResolucao != null)
+                            {
+                                @Model.DataResolucao.Value.ToString("dd/MM/yyyy HH:mm")
+                            }
+                            else
+                            {
+                                <span>--</span>
+                            }
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Editar / Tratar</a>
+            <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+        </div>
+    </div>
+</div>

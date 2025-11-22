@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Sprint1.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Gestão de Usuários";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>👥 Usuários Cadastrados</h1>
+    <a asp-action="Create" class="btn btn-success">
+        + Novo Usuário
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Modelo</th>
+                        <th>Altura</th>
+                        <th>Peso</th>
+                        <th>Cadastro</th>
+                        <th class="text-end">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold">@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>
+                                <span class="badge bg-info text-dark">@Html.DisplayFor(modelItem => item.Role)</span>
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.ModeloTrabalho)</td>
+                            <td>@item.Altura m</td>
+                            <td>@item.Peso kg</td>
+                            <td>@item.DataCadastro.ToString("dd/MM/yyyy")</td>
+
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning" title="Editar">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary" title="Detalhes">Det</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" title="Excluir">X</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
