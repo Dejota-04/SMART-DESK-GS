@@ -2,56 +2,61 @@
     ViewData["Title"] = "Página Inicial";
 }
 
+<!-- HERO SECTION: Cabeçalho de Destaque -->
 <div class="p-5 mb-4 bg-light rounded-3 shadow-sm border-top border-5 border-success" style="background: linear-gradient(to right, #e8f5e9, #ffffff);">
     <div class="container-fluid py-3 text-center text-md-start">
         <h1 class="display-5 fw-bold text-dark">Bem-vindo ao Smart Desk</h1>
         <p class="col-md-8 fs-5 text-muted">
-            Sua plataforma central para <strong>Compliance</strong> e monitoramento inteligente de <strong>Ergonomia e Saúde Ocupacional</strong>.
+            Sistema Integrado de <strong>Gestão Corporativa</strong> e <strong>Atendimento ao Colaborador</strong>.
         </p>
         <hr class="my-4">
         <p class="text-secondary">
-            Utilize os módulos abaixo para gerenciar colaboradores, dispositivos IoT e acompanhar chamados de adequação ergonômica.
+            Utilize os módulos abaixo para gerenciar o cadastro de colaboradores e realizar a tratativa de chamados de suporte.
         </p>
     </div>
 </div>
 
+<!-- MAIN CONTENT: Grid de Navegação -->
 <div class="row align-items-md-stretch">
+
+    <!-- CARD 1: Gestão de Usuários -->
     <div class="col-md-6 mb-4">
-        <div class="card h-100 shadow-sm hover-shadow transition-300 border-0 h-100">
+        <div class="card h-100 shadow-sm hover-shadow transition-300 border-0">
             <div class="card-body p-4 text-center text-md-start">
                 <div class="mb-3 text-primary">
                     <span style="font-size: 3rem;">👥</span>
                 </div>
-                <h2 class="card-title fw-bold">Gestão de Pessoas & IoT</h2>
+                <h2 class="card-title fw-bold">Colaboradores</h2>
                 <p class="card-text text-muted my-3">
-                    Cadastre colaboradores, defina perfis de trabalho (Remoto/Híbrido), registre dados antropométricos e vincule os sensores do Smart Desk.
+                    Módulo administrativo para cadastro de funcionários, definição de perfis de acesso e atualização de dados cadastrais (Peso, Altura, Modelo de Trabalho).
                 </p>
                 <a asp-controller="Usuarios" asp-action="Index" class="btn btn-primary btn-lg px-4 mt-auto">
-                    Acessar Usuários
+                    Gerenciar Usuários
                 </a>
             </div>
             <div class="card-footer bg-transparent border-top-0 text-muted fst-italic small">
-                Módulo de Cadastro e Vinculação
+                CRUD de Usuários
             </div>
         </div>
     </div>
 
+    <!-- CARD 2: Central de Atendimento -->
     <div class="col-md-6 mb-4">
-        <div class="card h-100 shadow-sm hover-shadow transition-300 border-0 h-100">
+        <div class="card h-100 shadow-sm hover-shadow transition-300 border-0">
             <div class="card-body p-4 text-center text-md-start">
                 <div class="mb-3 text-warning">
                     <span style="font-size: 3rem;">🎫</span>
                 </div>
-                <h2 class="card-title fw-bold">Central de Compliance</h2>
+                <h2 class="card-title fw-bold">Central de Chamados</h2>
                 <p class="card-text text-muted my-3">
-                    Visualize, trate e acompanhe os chamados de suporte ergonômico abertos pelos colaboradores ou gerados automaticamente pelos alertas.
+                    Painel para visualização, abertura e resolução de tickets de suporte. Acompanhe o status das solicitações e histórico de atendimentos.
                 </p>
                 <a asp-controller="Suportes" asp-action="Index" class="btn btn-warning text-dark btn-lg px-4 mt-auto">
-                    Ver Atendimentos
+                    Acessar Suporte
                 </a>
             </div>
             <div class="card-footer bg-transparent border-top-0 text-muted fst-italic small">
-                Módulo de Tratativa e QA
+                Gestão de Tickets
             </div>
         </div>
     </div>
